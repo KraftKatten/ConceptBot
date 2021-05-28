@@ -70,6 +70,7 @@ async def on_message(message):
                                        "!getprofile - sends you your own profile picture. \n" +
                                        "!DOSspam - send 10 messages in quick succession. \n" +
                                        "!DOScleanse - removes the 10 latest messages. \n" +
+                                       "!DOSdeletechannel - delete this channel! \n" +
                                        "!RCEimage - sends an image. \n" +
                                        "!RCEfile - sends a file. \n" +
                                        "!RCElink - sends a link.")
@@ -130,6 +131,11 @@ async def on_message(message):
                 else:
                     await m.delete()
             await message.channel.send("Deleted the latest 10 messages, excluding the one you just wrote! ")
+            return
+
+        # See !help for definition.
+        if "!dosdeletechannel" in content:
+            await channel.delete()
             return
 
         # See !help for definition.
@@ -202,12 +208,6 @@ async def updateOnlineMembers():
     link = await channel.create_invite(max_age=100)
     client_link = await client.fetch_invite(link)
     state.online_members = client_link.approximate_presence_count
-
-
-# Deletes a channel given that the bot has the right permissions
-async def deleteChannel(channel):
-    await channel.delete()
-
 
 # Place your token here
 client.run("TOKEN")
